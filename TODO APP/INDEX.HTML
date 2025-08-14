@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk To-Do List</title>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        /* Centering and Layout */
+        #todo-app {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffcc;
+            border-radius: 15px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 0 20px #00ffcc, 0 0 50px #ff00cc;
+        }
+
+        /* Input and Buttons */
+        input[type="text"] {
+            width: calc(100% - 90px);
+            padding: 10px;
+            border: 2px solid #00ffcc;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-left: 5px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #00ffcc, #ff00cc);
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #ff00cc, 0 0 10px #00ffcc;
+        }
+
+        #todos div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff00cc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00ffcc, 0 0 10px #ff00cc;
+        }
+
+        h1 {
+            font-size: 18px;
+            margin: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-app">
+        <input type="text" placeholder="Enter a new to-do">
+        <button onclick="addtodo()">Add</button>
+        <button onclick="deleteLast()">Delete Last</button>
+        <button onclick="deleteFirst()">Delete First</button>
+        <div id="todos"></div>
+    </div>
+
+    <script>
+        let todos = [];
+        function addtodo() {
+            const inputValue = document.querySelector('input').value.trim();
+            if (inputValue) {
+                todos.push({ title: inputValue });
+                document.querySelector('input').value = "";
+                render();
+            } else {
+                alert("To-do item cannot be empty!");
+            }
+        }
+
+        function deleteLast() {
+            todos.splice(todos.length - 1, 1);
+            render();
+        }
+
+        function deleteFirst() {
+            todos.splice(0, 1);
+            render();
+        }
+
+        function createTodoElement(todo) {
+            const div = document.createElement('div');
+            const h1 = document.createElement('h1');
+            const button = document.createElement('button');
+            button.innerHTML = 'Delete';
+            button.onclick = function () {
+                todos.splice(todos.indexOf(todo), 1);
+                render();
+            };
+            h1.innerHTML = todo.title;
+            div.append(h1);
+            div.append(button);
+            return div;
+        }
+
+        function render() {
+            const todosContainer = document.querySelector('#todos');
+            todosContainer.innerHTML = "";
+            todos.forEach(todo => {
+                todosContainer.appendChild(createTodoElement(todo));
+            });
+        }
+    </script>
+</body>
+</html>

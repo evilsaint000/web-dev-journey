@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            padding: 10px;
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+   <ul id="menu">
+    <li>Home</li>
+    <li>About</li>
+    <li>Blog</li>
+    <li style="display:none">Project</li>
+    <input type="text" id="username" placeholder="Enter your name" 
+    >  
+    <h1 id="title" class="main msg"></h1>
+   </ul>   
+    <script>
+        let men=document.getElementById("menu");
+
+        //menu.innerText="<p>Home | About | Blog | Project</p>"; //it will replace the inner text of the menu with the given text
+        //Element.after() method inserts a set of Node objects or DOMString objects after the last child of the ParentNode.
+        //menu.after(str1,str2)
+        //parentNode.append() method inserts a set of Node objects or DOMString objects after the last child of the ParentNode.
+        //menu.append(str1,str2)
+        //parentNode.prepend() method inserts a set of Node objects or DOMString objects before the first child of the ParentNode.
+        //menu.prepend(str1,str2)
+        //element.insertAdjacentElement(position,element) method inserts a set of Node objects or DOMString objects at the specified position.
+        //menu.insertAdjacentElement("beforebegin",str1)
+        //menu.insertAdjacentElement("afterbegin",str1)
+        //menu.insertAdjacentElement("beforeend",str1)
+        //menu.insertAdjacentElement("afterend",str1) 
+
+        //parentNode.replaceChild(newNode,oldNode) method replaces a child node within the specified parent.
+       // menu.replaceChild(str1,str2)
+        //let newNode=originalNode.cloneNode(); //it will clone the original node
+        //let newNode=originalNode.cloneNode(true); //true means it will clone the child nodes also
+
+        //parentNode.RemoveChild(childNode) method removes a child node from the specified parent.
+        //menu.removeChild(menu.lastChild);
+        //DIFF BETWEEN INNERTEXT AND TEXTCONTENT is that innerText is aware of the styling and textContent is not aware of the styling
+        //console.log(menu.attributes);
+
+        //console.log(menu.getAttribute("id"));
+       // men.setAttribute("class","menu");
+       
+        //console.log(menu.hasAttribute("id"));
+        //men.removeAttribute("class");  
+       // console.log(men);
+
+       //style properties
+        //let inputBox=document.getElementById("username");
+        //console.log(inputBox.style);
+        //inputBox.style.padding="10px";
+        //inputBox.style.cssText+="background-color:blue;color:white";
+        //console.log(inputBox);
+        //window.getComputedStyle(element) method returns an object containing the values of all CSS properties of an element, after applying active stylesheets and resolving any basic computation those values may contain.
+        //console.log(window.getComputedStyle(inputBox).fontSize);
+
+        let title = document.getElementById("title");
+        console.log(title.classList);
+        console.log(title.className);
+        //title.class="new";
+        title.classList.add("new");
+        console.log(title);
+        //diff vs classList and className is that classList is a read only property and className is a read and write property
+        title.classList.remove("new");
+        console.log(title);
+        title.classList.replace("msg","new");
+        console.log(title); 
+        console.log(title.classList.contains("msg"));
+        title.classList.toggle("msg"); //if the class is present then it will remove it and if it is not present then it will add it
+        
+    </script>
+</body>
+</html>

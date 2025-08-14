@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <input type="text">
+    <button onclick="addtodo()">Add</button>
+
+    <button onclick="deleteLast()">Delete Last</button> 
+    <button onclick="deleteFirst()">Delete First</button>
+    <div id="todos">
+
+    </div>
+
+    <script>
+        let todos = [];
+        function addtodo(){
+            todos.push({
+                title: document.querySelector('input').value,
+            })
+            render();
+            
+        }
+        function deleteLast(){
+            todos.splice(todos.length - 1, 1); 
+            render();   
+        }
+        function deleteFirst(){
+            todos.splice(0, 1); 
+            render();   
+        }
+    
+        function createTodoElement(todo){
+            const div = document.createElement('div');
+            const h1 = document.createElement('h1');
+            const button = document.createElement('button');
+            button.innerHTML = 'Delete';
+            button.onclick = function(){
+                todos.splice(todos.indexOf(todo), 1);
+                render();
+            }
+            h1.innerHTML = todo.title;
+            div.append(h1);
+            div.append(button);
+            return div    
+        }
+        //render fucntion thats what react does for us 
+        function render(){
+            document.querySelector('#todos').innerHTML = "";
+            for(let i = 0; i < todos.length; i++){
+                const element = createTodoElement(todos[i]);   
+                document.querySelector("#todos").appendChild(element);
+            }
+        }
+    </script>
+</body>
+ 
+</html>
