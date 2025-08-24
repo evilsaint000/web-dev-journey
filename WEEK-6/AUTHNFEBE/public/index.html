@@ -1,0 +1,131 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberAuth Terminal</title>
+    <h1></h1>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js">
+
+    </script>
+</head>
+<body>
+    <div class="cyber-grid-bg"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="title">CYBER AUTH</h1>
+            <div class="subtitle">SECURE ACCESS TERMINAL</div>
+            <div class="title-line"></div>
+        </header>
+
+        <div class="auth-sections">
+            <section class="auth-card">
+                <div class="card-header">
+                    <h2>REGISTER</h2>
+                    <div class="header-glow"></div>
+                </div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input id="signup-username" type="text" placeholder="USERNAME" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <div class="input-group">
+                        <input id="signup-password" type="password" placeholder="PASSWORD" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <button onclick="signup()" class="cyber-button">
+                        <span>INITIALIZE</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+            </section>
+
+            <section class="auth-card">
+                <div class="card-header">
+                    <h2>ACCESS</h2>
+                    <div class="header-glow"></div>
+                </div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input id="signin-username" type="text" placeholder="USERNAME" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <div class="input-group">
+                        <input id="signin-password" type="password" placeholder="PASSWORD" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <button onclick="signin()" class="cyber-button">
+                        <span>CONNECT</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <section class="info-section">
+            <div class="info-card">
+                <div class="card-header">
+                    <h2>USER DATA</h2>
+                    <div class="header-glow"></div>
+                </div>
+                <div class="card-body">
+                    <div id="information" class="user-info">
+                        <span class="status-text">SYSTEM READY</span>
+                    </div>
+                    <button onclick="logout()" class="cyber-button secondary">
+                        <span>DISCONNECT</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        async function signup() {
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+
+            await axios.post("http://localhost:3000/signup", {
+                username: username,
+                password: password
+            });
+            alert("You are signed up");
+        }
+        
+        async function signin() {
+            const username = document.getElementById("signin-username").value;
+            const password = document.getElementById("signin-password").value;
+            const response = await axios.post("http://localhost:3000/signin", {
+                username: username,
+                password: password
+            });
+
+            localStorage.setItem("token", response.data.token);
+
+            // update UI immediately after signin
+            await getUserInformation();
+            alert("You are signed in");
+        }
+        
+        async function getUserInformation() {
+            const response = await axios.get("http://localhost:3000/me", {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            })
+            document.getElementById("information").innerHTML = "Username: " + response.data.username + " Password: " + response.data.password
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            document.getElementById('information').innerHTML = '<span class="status-text">SYSTEM READY</span>';
+        }
+    </script>
+</body>
+</html>
