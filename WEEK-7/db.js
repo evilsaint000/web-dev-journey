@@ -12,7 +12,9 @@ const User = new Schema({
 const Todo = new Schema({
     title : String,
     done : Boolean,
-    userId : ObjectId
+    userId : ObjectId,
+    time: { type : Date}, // creation time
+    deadline: { type : Date} // time to be completed
 })
 
 const UserModel = mongoose.model('users',User);

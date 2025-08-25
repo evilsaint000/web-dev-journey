@@ -102,11 +102,14 @@ app.post("/todo",auth, async function(req, res) {
     const userId = req.userId;
     const title = req.body.title;
     const done = req.body.done
+    const deadline = req.body.deadline; // get deadline from request
 
     await TodoModel.create({
         title,
         userId,
-        done
+        done,
+        time: new Date(), // set creation time to now
+        deadline: deadline ? new Date(deadline) : null // set deadline
     })
 
     res.json({
