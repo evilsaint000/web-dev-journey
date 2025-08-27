@@ -6,9 +6,12 @@ const mongoose = require('mongoose');
 const JWT_SECRET = "annngggg";
 const { z } = require("zod");
 
+
 mongoose.connect("mongodb+srv://rishirajjsr20:VF9lHxqQYk2zkJLm@cluster0.ywmuh6y.mongodb.net/todo-app-database");
 const app = express();
 app.use(express.json());
+
+
 
 app.post("/signup", async function(req, res) {
     const requiredbody = z.object({
